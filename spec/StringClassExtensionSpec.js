@@ -1,17 +1,20 @@
 (function() {
-  describe('String class extension spec', function() {
+  describe('String Class Extension Spec:', function() {
 
+    // TODO: Test if these methods works with String objects.
+    // TODO: Test if these methods works when the String has numbers in it.
+    // TODO: Test if this works with an empty string.
     describe('String.prototype.hasVowels', function() {
 
       it('should return true if a string contains vowels', function() {
         var string = 'something with vowels inside';
-        expect(string.hasVowels()).toBeTruthy();
+        expect(string.hasVowels()).toBe(true);
       });
 
       it('should return false if the string does not contain vowels',
         function() {
           var string = 'grrrr';
-          expect(string.hasVowels()).toBeFalsy();
+          expect(string.hasVowels()).toBe(false);
         });
     });
 
@@ -41,7 +44,7 @@
           Ensure that it doesn't call the inbuilt 'toUpperCase' method,
           and that it returns the correct result nonetheless.
            */
-          spyOn(String.prototype, 'toUpperCase');
+          spyOn(String.prototype, 'toUpperCase').and.callThrough();
 
           var testString = 'Make Me Uppercase';
           var upperCaseString = testString.toUpper();
@@ -74,7 +77,7 @@
 
       it('should not use the String inbuilt "toLowerCase" method',
         function() {
-          spyOn(String.prototype, 'toLowerCase');
+          spyOn(String.prototype, 'toLowerCase').and.callThrough();
 
           var testString = 'Make Me LOWERCASE';
           var lowerCaseString = testString.toLower();
@@ -136,7 +139,8 @@
       it('should return the number of words in the string', function() {
         var testString = 'Some words that need counting';
 
-        expect(testString.wordCount()).toBe(testString.length);
+        expect(testString.wordCount()).toBe(testString.split(' ')
+          .length);
       });
 
       it('should use the custom "words" String method', function() {
@@ -147,11 +151,14 @@
 
         expect(String.prototype.words).toHaveBeenCalled();
         expect(String.prototype.words).toHaveBeenCalledTimes(1);
-        expect(numberOfWords).toBe(testString.length);
+        expect(numberOfWords).toBe(testString.split(' ').length);
       });
     });
 
     describe('String.prototype.toCurrency', function() {
+
+      // TODO: Test behaviour with strings that are not composed entirely
+      // of numbers.
 
       it('should return a currency representation of a string',
         function() {
