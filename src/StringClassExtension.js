@@ -74,11 +74,12 @@ String.prototype.toCurrency = function() {
    * e.g 11111.11 => 11,111.11
    * Return NaN if the string is non-numerical.
    */
-  if (isNaN(this.valueOf())) {
+  var isNumberRegex = /^[0-9]+(\.[0-9]+)?$/;
+  if (!isNumberRegex.test(this)) {
     return NaN;
   }
 
-  var matches = this.split('.');
+  var matches = this.split(/\./);
   var integralPart = matches[0].split('');
   var fractionalPart = matches[1] || null;
 

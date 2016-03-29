@@ -1,9 +1,6 @@
 (function() {
   describe('String Class Extension Spec:', function() {
 
-    // TODO: Test if these methods works with String objects.
-    // TODO: Test if these methods works when the String has numbers in it.
-    // TODO: Test if this works with an empty string.
     describe('String.prototype.hasVowels', function() {
 
       it('should return true if a string contains vowels', function() {
@@ -15,7 +12,14 @@
         function() {
           var string = 'grrrr';
           expect(string.hasVowels()).toBe(false);
+          expect(''.hasVowels()).toBe(false);
         });
+
+      it('should work for both strings and string objects', function() {
+        var testString = new String('Test String');
+
+        expect(testString.hasVowels()).toBe(true);
+      });
     });
 
     describe('String.prototype.toUpper', function() {
@@ -53,6 +57,13 @@
           expect(upperCaseString).toBe(testString.toUpperCase());
         }
       );
+
+      it('should work for both strings and string objects', function() {
+        var testString = new String('Test String');
+        var testString2 = 'Test String';
+
+        expect(testString.toUpper()).toEqual(testString2.toUpper());
+      });
     });
 
     describe('String.prototype.toLower', function() {
@@ -86,6 +97,13 @@
           expect(lowerCaseString).toBe(testString.toLowerCase());
         }
       );
+
+      it('should work for both strings and string objects', function() {
+        var testString = new String('Test String');
+        var testString2 = 'Test String';
+
+        expect(testString.toLower()).toEqual(testString2.toLower());
+      });
     });
 
     describe('String.prototype.ucFirst', function() {
@@ -106,6 +124,13 @@
         expect(String.prototype.toUpper).toHaveBeenCalledTimes(1);
         expect(ucFirstString).toBe('This is another test');
       });
+
+      it('should work for both strings and string objects', function() {
+        var testString = new String('test string');
+        var testString2 = 'test string';
+
+        expect(testString.ucFirst()).toEqual(testString2.ucFirst());
+      });
     });
 
     describe('String.prototype.isQuestion', function() {
@@ -121,6 +146,12 @@
         function() {
           expect('This is a statement'.isQuestion()).toBeFalsy();
         });
+
+      it('should work for both strings and string objects', function() {
+        var testString = new String('Is this a test string?');
+
+        expect(testString.isQuestion()).toBeTruthy();
+      });
     });
 
     describe('String.prototype.words', function() {
@@ -132,6 +163,21 @@
         expect(Array.isArray(result)).toBeTruthy();
         expect(result).toEqual(testString.split(' '));
       });
+
+      it('should not consider punctuations as words', function() {
+        var testString = 'break my @heart, oh bad program! @ day I code.';
+        var result = testString.words();
+
+        expect(result).toEqual(
+          ['break', 'my', 'heart', 'oh', 'bad', 'program', 'day', 'I', 'code']);
+      });
+
+      it('should work for both strings and string objects', function() {
+        var testString1 = new String('This is a test string');
+        var testString2 = 'This is a test string';
+
+        expect(testString1.words()).toEqual(testString2.words());
+      });
     });
 
     describe('String.prototype.wordCount', function() {
@@ -139,8 +185,8 @@
       it('should return the number of words in the string', function() {
         var testString = 'Some words that need counting';
 
-        expect(testString.wordCount()).toBe(testString.split(' ')
-          .length);
+        expect(
+          testString.wordCount()).toBe(5);
       });
 
       it('should use the custom "words" String method', function() {
@@ -151,20 +197,22 @@
 
         expect(String.prototype.words).toHaveBeenCalled();
         expect(String.prototype.words).toHaveBeenCalledTimes(1);
-        expect(numberOfWords).toBe(testString.split(' ').length);
+        expect(numberOfWords).toBe(5);
       });
     });
 
     describe('String.prototype.toCurrency', function() {
 
-      // TODO: Test behaviour with strings that are not composed entirely
-      // of numbers.
-
       it('should return a currency representation of a string',
         function() {
           expect('11111.11'.toCurrency()).toBe('11,111.11');
           expect('123456'.toCurrency()).toBe('123,456');
+          expect('987654321'.toCurrency()).toBe('987,654,321');
         });
+
+      it('should return NaN for non-numerical strings', function() {
+        expect(isNaN('1234.fd'.toCurrency())).toBeTruthy();
+      });
     });
 
     describe('String.prototype.fromCurrency', function() {
@@ -173,8 +221,12 @@
         'should return a number representation of the currency string',
         function() {
           expect('111,111.11'.fromCurrency()).toBe(111111.11);
-          expect('123,456'.fromCurrency()).toBe(123456);
+          expect('123,456,890'.fromCurrency()).toBe(123456890);
         });
+
+      it('should return NaN for non-numerical strings', function() {
+        expect(isNaN('29,345Ksh.'.fromCurrency())).toBeTruthy();
+      });
     });
   });
 })();
