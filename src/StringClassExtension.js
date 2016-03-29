@@ -79,20 +79,7 @@ String.prototype.toCurrency = function() {
     return NaN;
   }
 
-  var matches = this.split(/\./);
-  var integralPart = matches[0].split('');
-  var fractionalPart = matches[1] || null;
-
-  for (var i = integralPart.length, j = 0; i > 0; i--, j++) {
-    if (j && j % 3 === 0) {
-      integralPart.splice(i, 0, ',');
-    }
-  }
-  if (fractionalPart) {
-    return [integralPart.join(''), fractionalPart].join('.');
-  }
-
-  return integralPart.join('');
+  return this.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
 String.prototype.fromCurrency = function() {
