@@ -13,30 +13,18 @@ String.prototype.toUpper = function() {
   /**
    * Return this String in uppercase.
    */
-  return this
-    .split('')
-    .map(function(letter) {
-      if (/[a-z]/.test(letter)) {
-        return String.fromCharCode(letter.charCodeAt() - 32);
-      }
-      return letter;
-    })
-    .join('');
+  return this.replace(/([a-z])/g, function(match){
+    return String.fromCharCode(match.charCodeAt(0) - 32);
+  });
 };
 
 String.prototype.toLower = function() {
   /**
    * Return this String in lowercase.
    */
-  return this
-    .split('')
-    .map(function(letter) {
-      if (/[A-Z]/.test(letter)) {
-        return String.fromCharCode(letter.charCodeAt() + 32);
-      }
-      return letter;
-    })
-    .join('');
+  return this.replace(/([A-Z])/g, function(match){
+    return String.fromCharCode(match.charCodeAt(0) + 32);
+  });
 };
 
 String.prototype.ucFirst = function() {
