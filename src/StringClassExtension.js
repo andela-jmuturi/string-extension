@@ -6,7 +6,7 @@ String.prototype.hasVowels = function() {
   /**
    * Return true if this string has vowels in it.
    */
-  return /[aeiou]/.test(this);
+  return /[aeiou]/i.test(this);
 };
 
 String.prototype.toUpper = function() {
@@ -67,7 +67,9 @@ String.prototype.toCurrency = function() {
     return NaN;
   }
 
-  return this.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  return parseFloat(Number(this).toFixed(2))
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
 String.prototype.fromCurrency = function() {
