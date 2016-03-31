@@ -58,6 +58,10 @@
         }
       );
 
+      it('should work if the string has special characters', function(){
+        expect('m@k3 me 7u$$per'.toUpper()).toBe('M@K3 ME 7U$$PER');
+      });
+
       it('should work for both strings and string objects', function() {
         var testString = new String('Test String');
         var testString2 = 'Test String';
@@ -97,6 +101,10 @@
           expect(lowerCaseString).toBe(testString.toLowerCase());
         }
       );
+
+      it('should work if the string has special characters', function(){
+        expect('M@K3 ME L0w∑π'.toLower()).toBe('m@k3 me l0w∑π');
+      });
 
       it('should work for both strings and string objects', function() {
         var testString = new String('Test String');
