@@ -4,8 +4,10 @@
     describe('String.prototype.hasVowels', function() {
 
       it('should return true if a string contains vowels', function() {
-        var string = 'something with vowels inside';
-        expect(string.hasVowels()).toBe(true);
+        var string1 = 'something with vowels inside';
+        var string2 = 'SOMETHING WITH VOWELS INSIDE';
+        expect(string1.hasVowels()).toBe(true);
+        expect(string2.hasVowels()).toBe(true);
       });
 
       it('should return false if the string does not contain vowels',
@@ -31,17 +33,6 @@
         expect(upperCaseString).toBe(testString.toUpperCase());
       });
 
-      it('should use the custom "toUpper" method', function() {
-        spyOn(String.prototype, 'toUpper').and.callThrough();
-
-        var testString = 'Make Me Uppercase';
-        var upperCaseString = testString.toUpper();
-
-        expect(String.prototype.toUpper).toHaveBeenCalled();
-        expect(String.prototype.toUpper).toHaveBeenCalledTimes(1);
-        expect(upperCaseString).toBe(testString.toUpperCase());
-      });
-
       it('should not use the String inbuilt "toUpperCase" method',
         function() {
           /*
@@ -58,7 +49,7 @@
         }
       );
 
-      it('should work if the string has special characters', function(){
+      it('should work if the string has special characters', function() {
         expect('m@k3 me 7u$$per'.toUpper()).toBe('M@K3 ME 7U$$PER');
       });
 
@@ -79,17 +70,6 @@
         expect(lowerCaseString).toBe(testString.toLowerCase());
       });
 
-      it('should use the custom "toLower" method', function() {
-        spyOn(String.prototype, 'toLower').and.callThrough();
-
-        var testString = 'MAKE me Lowercase';
-        var lowerCaseString = testString.toLower();
-
-        expect(String.prototype.toLower).toHaveBeenCalled();
-        expect(String.prototype.toLower).toHaveBeenCalledTimes(1);
-        expect(lowerCaseString).toBe(testString.toLowerCase());
-      });
-
       it('should not use the String inbuilt "toLowerCase" method',
         function() {
           spyOn(String.prototype, 'toLowerCase').and.callThrough();
@@ -102,7 +82,7 @@
         }
       );
 
-      it('should work if the string has special characters', function(){
+      it('should work if the string has special characters', function() {
         expect('M@K3 ME L0w∑π'.toLower()).toBe('m@k3 me l0w∑π');
       });
 
@@ -116,8 +96,7 @@
 
     describe('String.prototype.ucFirst', function() {
 
-      it(
-        'should return the string with it\'s first character in uppercase',
+      it('should return the string with it\'s first character in uppercase',
         function() {
           expect('this is a test'.ucFirst()).toBe('This is a test');
         });
@@ -143,8 +122,7 @@
 
     describe('String.prototype.isQuestion', function() {
 
-      it(
-        'should return true if a statement ends with a question mark',
+      it('should return true if a statement ends with a question mark',
         function() {
           expect('Is this a question?'.isQuestion()).toBeTruthy();
         });
@@ -216,6 +194,8 @@
           expect('11111.11'.toCurrency()).toBe('11,111.11');
           expect('123456'.toCurrency()).toBe('123,456');
           expect('987654321'.toCurrency()).toBe('987,654,321');
+          expect('9876.894'.toCurrency()).toBe('9,876.89');
+          expect('9876.897'.toCurrency()).toBe('9,876.9');
         });
 
       it('should return NaN for non-numerical strings', function() {
@@ -225,8 +205,7 @@
 
     describe('String.prototype.fromCurrency', function() {
 
-      it(
-        'should return a number representation of the currency string',
+      it('should return a number representation of the currency string',
         function() {
           expect('111,111.11'.fromCurrency()).toBe(111111.11);
           expect('123,456,890'.fromCurrency()).toBe(123456890);
